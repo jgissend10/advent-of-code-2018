@@ -13,7 +13,7 @@ fn compute_freq(s: String) -> i32  {
     freq
 }
 
-fn process_file(filename: &str) -> i32 {
+fn process_file(filename: &str, func: fn(String) -> i32) -> i32 {
     // Create a path to the desired file
     let path = Path::new(filename);
     let display = path.display();
@@ -32,14 +32,14 @@ fn process_file(filename: &str) -> i32 {
     match file.read_to_string(&mut s) {
         Err(why) => panic!("couldn't read {}: {}", display,
                                                    why.description()),
-        Ok(_) => compute_freq(s),
+        Ok(_) => func(s),
     }
 
     // `file` goes out of scope, and the "hello.txt" file gets closed
 }
 
 fn main() {
-    print!("The answer is: {}\n", process_file("/Users/james/PycharmProjects/advent-of-code-2018/day1/input.txt"));
+    print!("The answer is: {}\n", process_file("/Users/james/PycharmProjects/advent-of-code-2018/day1/input.txt", compute_freq));
 }
 
 #[cfg(test)]
@@ -49,16 +49,16 @@ mod tests {
 
     #[test]
     fn test1() {
-        assert_eq!(process_file("/Users/james/PycharmProjects/advent-of-code-2018/day1/test_files/test1.txt"), 3);
+        assert_eq!(process_file("/Users/james/PycharmProjects/advent-of-code-2018/day1/test_files/test1.txt", compute_freq), 3);
     }
 
     #[test]
     fn test2() {
-        assert_eq!(process_file("/Users/james/PycharmProjects/advent-of-code-2018/day1/test_files/test2.txt"), 0);
+        assert_eq!(process_file("/Users/james/PycharmProjects/advent-of-code-2018/day1/test_files/test2.txt", compute_freq), 0);
     }
 
     #[test]
     fn test3() {
-        assert_eq!(process_file("/Users/james/PycharmProjects/advent-of-code-2018/day1/test_files/test3.txt"), -6);
+        assert_eq!(process_file("/Users/james/PycharmProjects/advent-of-code-2018/day1/test_files/test3.txt", compute_freq), -6);
     }
 }
