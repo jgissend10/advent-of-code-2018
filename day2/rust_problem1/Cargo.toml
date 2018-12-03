@@ -1,0 +1,6 @@
+[package]
+name = "rust_problem1"
+version = "0.1.0"
+authors = ["James Gissendaner Jr. <JamesTGissendanerJr@gmail.com>"]
+
+[dependencies]
